@@ -54,8 +54,7 @@ def precipitation():
     session = Session(engine)
     results = session.query(Measurement.date, Measurement.prcp).all()
 
-    # Convert list of tuples into normal list
-    #all_names = list(np.ravel(results))
+    # Convert list to json
     list_meas = []
     for x in results:
         meas_dic = {}
@@ -72,8 +71,7 @@ def station():
     results = session.query(Station.station, Station.name,
                             Station.latitude, Station.longitude).all()
 
-    # Convert list of tuples into normal list
-    #all_names = list(np.ravel(results))
+    # Convert list to json
     list_station = []
     for x in results:
         stat_dic = {}
@@ -84,6 +82,7 @@ def station():
         list_station.append(stat_dic)
     return jsonify(list_station)
 
+
 @app.route("/api/v1.0/tobs")
 def tobs():
     """Return a list of Temperature Observations (tobs) for the previous year."""
@@ -91,12 +90,14 @@ def tobs():
     session = Session(engine)
 
     most_recent_date = session.query(Measurement.date)\
-                            .order_by(Measurement.date.desc()).first()
-    #days = 30(days) * 12 = 1 year
-    month_12_ago = datetime.datetime.strptime(most_recent_date[0], '%Y-%m-%d')-datetime.timedelta(days=30*12) 
-    
+        .order_by(Measurement.date.desc()).first()
+    # days = 30(days) * 12 = 1 year
+    month_12_ago = datetime.datetime.strptime(
+        most_recent_date[0], '%Y-%m-%d')-datetime.timedelta(days=30*12)
+
     result_12_months = session.query(Measurement.tobs, Measurement.date).\
-        filter(Measurement.date>=month_12_ago, Measurement.date<=most_recent_date[0]).all()
+        filter(Measurement.date >= month_12_ago,
+               Measurement.date <= most_recent_date[0]).all()
     # Convert list of tuples into normal list
     #all_names = list(np.ravel(results))
     list_temp = []
@@ -106,23 +107,54 @@ def tobs():
         temp_dic["tobs"] = x[0]
         list_temp.append(temp_dic)
     return jsonify(list_temp)
-# @app.route("/api/v1.0/passengers")
-# def passengers():
-#     """Return a list of passenger data including the name, age, and sex of each passenger"""
-#     # Query all passengers
-#     session = Session(engine)
-#     results = session.query(Passenger.name, Passenger.age, Passenger.sex).all()
 
-#     # Create a dictionary from the row data and append to a list of all_passengers
-#     all_passengers = []
-#     for name, age, sex in results:
-#         passenger_dict = {}
-#         passenger_dict["name"] = name
-#         passenger_dict["age"] = age
-#         passenger_dict["sex"] = sex
-#         all_passengers.append(passenger_dict)
 
-#     return jsonify(all_passengers)
+@app.route("/api/v1.0/<start>")
+def start(start):
+    """Return a list of all measure greater than start"""
+    # Query all passengers
+    session = Session(engine)
+    try:
+        results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
+            filter(Measurement.date >= start).all()
+
+    # Convert list to json
+        list_meas = []
+        for x in results:
+            stat_dic = {}
+            stat_dic["min"] = x[0]
+            stat_dic["avg"] = x[1]
+            stat_dic["max"] = x[2]
+            list_meas.append(stat_dic)
+
+        return jsonify(list_meas)
+    except:
+        return jsonify({"error": f"not found."}), 404
+
+
+@app.route("/api/v1.0/<start>/<end>")
+def startEnd(start, end):
+    """Return a list of all measure greater than start and less than end date"""
+    # Query all passengers
+    session = Session(engine)
+    try:
+        results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
+            filter(Measurement.date >= start, Measurement.date <= end).all()
+
+    # Convert list of tuples into normal list
+    #all_names = list(np.ravel(results))
+        list_meas = []
+        for x in results:
+            stat_dic = {}
+            stat_dic["min"] = x[0]
+            stat_dic["avg"] = x[1]
+            stat_dic["max"] = x[2]
+
+            list_meas.append(stat_dic)
+
+        return jsonify(list_meas)
+    except:
+        return jsonify({"error": f"not found."}), 404
 
 
 if __name__ == '__main__':
