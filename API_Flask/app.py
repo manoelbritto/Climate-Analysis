@@ -42,8 +42,8 @@ def welcome():
         f"/api/v1.0/precipitation<br/>"
         f"/api/v1.0/stations<br/>"
         f"/api/v1.0/tobs<br/>"
-        f"/api/v1.0/<start>/<br>"
-        f"/api/v1.0/<start>/<end>"
+        f"/api/v1.0/'start'/<br>"
+        f"/api/v1.0/'start'/'end'"
     )
 
 
@@ -115,8 +115,10 @@ def start(start):
     # Query all passengers
     session = Session(engine)
     try:
-        results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).filter(Measurement.date >= start).all()
-       
+        results = session.query(func.min(Measurement.tobs),
+                                func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
+            filter(Measurement.date > start).all()
+
     # Convert list to json
         list_meas = []
         for x in results:
@@ -138,7 +140,7 @@ def startEnd(start, end):
     session = Session(engine)
     try:
         results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
-            filter(Measurement.date >= start, Measurement.date <= end).all()
+            filter(Measurement.date > start, Measurement.date <= end).all()
 
     # Convert list of tuples into normal list
     #all_names = list(np.ravel(results))
