@@ -115,9 +115,8 @@ def start(start):
     # Query all passengers
     session = Session(engine)
     try:
-        results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
-            filter(Measurement.date >= start).all()
-
+        results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).filter(Measurement.date >= start).all()
+       
     # Convert list to json
         list_meas = []
         for x in results:
