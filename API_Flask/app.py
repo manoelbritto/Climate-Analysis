@@ -140,7 +140,7 @@ def startEnd(start, end):
     session = Session(engine)
     try:
         results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
-            filter(Measurement.date > start, Measurement.date <= end).all()
+            filter(Measurement.date > start, Measurement.date < end).all()
 
     # Convert list of tuples into normal list
     #all_names = list(np.ravel(results))
