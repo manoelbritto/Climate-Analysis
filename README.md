@@ -5,8 +5,8 @@ This project uses SQLAlchemy and API with Flask to:
 1. Expose data in JSON format to be viewed by external developers
 
 
-## Getting start:
-To run this code is necessary to have some library installed on your machine:<br>
+## Getting started:
+To run this code is necessary to have some libraries installed on your machine:<br>
 **Anaconda:**<br>
 https://www.anaconda.com/distribution/<br>
 
