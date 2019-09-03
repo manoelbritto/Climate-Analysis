@@ -1,23 +1,27 @@
-# Climate-Analysis
-Python: SQLAlchemy and Flask (API)
+# Project: Climate-Analysis
+This project uses SQLAlchemy and API with Flask to:
+1. Extract data from SQLite database
+1. Plot results using data analytics tools
+1. Expose data in JSON format to be viewed by external developers
 
-There are two parts in this probject, the first one is Climate Analysis and Exploration. And the second one exposes the database content using API with Flask
 
-1. Firt part: Climate Analysis and Exploration
+There are two parts to this project. The first one is Climate Analysis and Exploration. Also, the second one exposes the database content using API with Flask
+
+1. First part: Climate Analysis and Exploration
 Import SQLite:
 ```Python
 # Python SQL toolkit and Object Relational Mapper
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, func,inspect
+from sqlalchemy import create_engine, func, inspect
 
 engine = create_engine("sqlite:///Resources/hawaii.sqlite")
 
 
 ```
 
-This code mapping automaticaly the tables and columns inside the SQLite:
+This code mapping automatically the tables and columns inside the SQLite:
 
 ```Python
 # reflect an existing database into a new model
@@ -35,7 +39,7 @@ Station = Base.classes.station
 ```Python
 session = Session(engine)
 ```
-Instead to create sql statement, it is possible to use SQLAlchemy which abstract the way to do queries in any kind of database. 
+Instead, to create an SQL statement, it is possible to use SQLAlchemy which abstract the way to do queries in any database. 
 
 
 ```Python
@@ -47,7 +51,7 @@ most_active = session.query(Measurement.station, func.count(Measurement.station)
 Using matplotib is possible to plot results, for instance, this one shows the preciptation in 12 months<br>
 ![plot](Images/precipitation.png)
 
-To see more analysis, go to jupyter notebook python code, or just click [here](climate_starter.ipynb)
+To see more analysis, go to Jupyter notebook python code, or just click [here](climate_starter.ipynb)
 
 2. Second part: Climate App<br>
 design a Flask API based on the queries
@@ -65,7 +69,7 @@ List all routes that are available.
 ```
 ![page](Images/api_precipitation.PNG)
 
-Convert the query results to a Dictionary using date as the key and prcp as the value.
+Convert the query results to a Dictionary using a date as the key and precipitation as the value.
 Return the JSON representation of your dictionary.
 
 ```
@@ -80,8 +84,7 @@ Return a JSON list of stations from the dataset.
 ```
 ![page](Images/api_tobs.PNG)
 
-query for the dates and temperature observations from a year from the last data point.
-Return a JSON list of Temperature Observations (tobs) for the previous year.
+The query for the dates and temperature observations from a year from the last data point, it returns a JSON list of Temperature Observations (tobs) for the previous year.
 
 ```
 /api/v1.0/<start>
@@ -94,7 +97,9 @@ Return a JSON list of Temperature Observations (tobs) for the previous year.
 ![page](Images/start_end.PNG)
 
 Return a JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range.
-When given the start only, calculate TMIN, TAVG, and TMAX for all dates greater than and equal to the start date.
-When given the start and the end date, calculate the TMIN, TAVG, and TMAX for dates between the start and end date inclusive
 
-
+# Features:
+* Python with:
+  * Sqlalchemy
+  * Flask
+  * Matplotlib
