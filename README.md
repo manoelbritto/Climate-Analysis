@@ -52,44 +52,46 @@ To see more analysis, go to jupyter notebook python code, or just click [here](c
 2. Second part: Climate App<br>
 design a Flask API based on the queries
 
-Routes
-
-
-
+## Routes
+```
 /
-
-
-Home page.
+```
+*Home page.<br>
 List all routes that are available.
 
-
-
+![page](Images/initial_page.PNG)
+```
 /api/v1.0/precipitation
-
+```
+![page](Images/api_precipitation.PNG)
 
 Convert the query results to a Dictionary using date as the key and prcp as the value.
 Return the JSON representation of your dictionary.
 
-
-
-
+```
 /api/v1.0/stations
-
-
+```
 Return a JSON list of stations from the dataset.
 
+![page](Images/api_stations.PNG)
 
-
+```
 /api/v1.0/tobs
-
+```
+![page](Images/api_tobs.PNG)
 
 query for the dates and temperature observations from a year from the last data point.
 Return a JSON list of Temperature Observations (tobs) for the previous year.
 
-
-
-/api/v1.0/<start> and /api/v1.0/<start>/<end>
-
+```
+/api/v1.0/<start>
+```  
+![page](Images/api_start.PNG)
+  
+```
+/api/v1.0/<start>/<end>
+```
+![page](Images/start_end.PNG)
 
 Return a JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range.
 When given the start only, calculate TMIN, TAVG, and TMAX for all dates greater than and equal to the start date.
