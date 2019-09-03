@@ -5,9 +5,25 @@ This project uses SQLAlchemy and API with Flask to:
 1. Expose data in JSON format to be viewed by external developers
 
 
+## Getting start:
+To run this code is necessary to have some library installed on your machine:<br>
+**Anaconda:**<br>
+https://www.anaconda.com/distribution/<br>
+
+**Libraries:**
+```
+pip install pandas
+pip install flask
+```
+
+**Execute the program:** <br>
+python app.py<br>
+
+## Implementaton: 
+
 There are two parts to this project. The first one is Climate Analysis and Exploration. Also, the second one exposes the database content using API with Flask
 
-1. First part: Climate Analysis and Exploration
+**1. First part:** Climate Analysis and Exploration
 Import SQLite:
 ```Python
 # Python SQL toolkit and Object Relational Mapper
@@ -53,10 +69,12 @@ Using matplotib is possible to plot results, for instance, this one shows the pr
 
 To see more analysis, go to Jupyter notebook python code, or just click [here](climate_starter.ipynb)
 
-2. Second part: Climate App<br>
+**2. Second part:** Climate App<br>
 design a Flask API based on the queries
 
 ## Routes
+
+To see this developement using Flask, click [here](API_Flask/app.py)
 ```
 /
 ```
