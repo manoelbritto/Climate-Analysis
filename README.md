@@ -15,7 +15,8 @@ engine = create_engine("sqlite:///Resources/hawaii.sqlite")
 ```
 
 This code mapping automaticaly the tables and columns inside the SQLite:
-```
+
+```Python
 # reflect an existing database into a new model
 Base = automap_base()
 # reflect the tables
